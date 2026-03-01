@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anthony Jesus — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange: #FF5A1F;
+    --cyan: #00D4FF;
+    --dark: #050E1A;
+    --card-bg: #0D1B2A;
+    --lavender: #F0EEFF;
+    --text: #E8EDF2;
+    --muted: #7A8A9A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(5, 14, 26, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  nav .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; }
+  nav .logo span { color: var(--cyan); }
+  nav ul { list-style: none; display: flex; gap: 2.5rem; }
+  nav ul a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+  nav ul a:hover { color: var(--text); }
+  nav .cta-nav {
+    background: var(--orange); color: #fff; border: none;
+    padding: 0.55rem 1.4rem; border-radius: 50px; font-size: 0.88rem;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 400;
+    transition: opacity 0.2s;
+  }
+  nav .cta-nav:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(180,60,0,0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 60%, rgba(0,100,180,0.2) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+  .hero-tag { color: var(--cyan); font-family: 'Syne', sans-serif; font-size: 1rem; margin-bottom: 0.5rem; }
+  .hero-tag span { color: var(--orange); }
+  .hero-sub { color: var(--muted); font-style: italic; font-size: 0.95rem; line-height: 1.7; margin-bottom: 2.5rem; }
+  .hero h1 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1.05; letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .hero-techs { color: var(--muted); font-size: 0.9rem; margin-bottom: 2.5rem; letter-spacing: 0.1em; }
+  .btn-orange {
+    background: var(--orange); color: #fff; border: none;
+    padding: 0.85rem 2.2rem; border-radius: 50px; font-size: 0.95rem;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(255,90,31,0.4);
+  }
+  .btn-orange:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,90,31,0.5); }
+
+  /* SECTION SHARED */
+  section { padding: 6rem 2rem; }
+  .section-label {
+    text-align: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.75rem; font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .section-sub { text-align: center; color: var(--cyan); font-size: 0.95rem; margin-bottom: 3.5rem; }
+
+  /* TECH CARDS */
+  #tecnologias { background: var(--lavender); color: #111; }
+  #tecnologias .section-label { color: #111; }
+  #tecnologias .section-sub { color: #7C3AED; }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .tech-card {
+    background: #fff; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .tech-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
+  .card-img {
+    height: 160px; display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+  }
+  .card-img.html { background: linear-gradient(135deg, #E44D26, #F16529); }
+  .card-img.css  { background: linear-gradient(135deg, #264DE4, #2965F1); }
+  .card-img.php  { background: linear-gradient(135deg, #8892BE, #4F5B93); }
+  .card-img.java { background: linear-gradient(135deg, #E76F00, #F89820); }
+  .card-body { padding: 1.2rem 1.4rem 1.4rem; }
+  .card-body h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; color: #111; }
+  .card-body p { font-size: 0.85rem; color: #555; line-height: 1.6; margin-bottom: 1rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    font-size: 0.75rem; padding: 0.25rem 0.7rem;
+    border-radius: 50px; background: #F0EEFF; color: #5B21B6;
+    font-weight: 500;
+  }
+
+  /* SHOP SECTION */
+  #tienda {
+    background: var(--dark);
+    position: relative; overflow: hidden;
+  }
+  #tienda::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .shop-intro { text-align: center; margin-bottom: 3rem; }
+  .shop-intro .badge {
+    display: inline-block; background: rgba(0,212,255,0.1);
+    color: var(--cyan); font-size: 0.8rem; font-weight: 600;
+    padding: 0.3rem 1rem; border-radius: 50px;
+    border: 1px solid rgba(0,212,255,0.25); margin-bottom: 1rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  .shop-layout {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 380px; gap: 2rem;
+  }
+
+  /* Products */
+  .products-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.2rem;
+  }
+  .product-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px; padding: 1.4rem;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer; position: relative;
+  }
+  .product-card:hover { border-color: rgba(0,212,255,0.3); transform: translateY(-4px); }
+  .product-card .offer-badge {
+    position: absolute; top: 0.8rem; right: 0.8rem;
+    background: var(--orange); color: #fff; font-size: 0.7rem;
+    padding: 0.2rem 0.6rem; border-radius: 50px; font-weight: 600;
+  }
+  .product-icon {
+    font-size: 2.5rem; margin-bottom: 1rem;
+    width: 56px; height: 56px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .product-card h4 { font-family: 'Syne', sans-serif; font-size: 1rem; margin-bottom: 0.3rem; }
+  .product-card .price { color: var(--cyan); font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
+  .product-card .price.offer { color: var(--orange); }
+  .add-btn {
+    width: 100%; background: rgba(0,212,255,0.1);
+    color: var(--cyan); border: 1px solid rgba(0,212,255,0.2);
+    padding: 0.55rem; border-radius: 8px; font-size: 0.85rem;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+  }
+  .add-btn:hover { background: rgba(0,212,255,0.2); }
+
+  /* Cart */
+  .cart-panel {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px; padding: 1.8rem;
+    position: sticky; top: 100px; height: fit-content;
+  }
+  .cart-panel h3 {
+    font-family: 'Syne', sans-serif; font-size: 1.1rem;
+    margin-bottom: 1.4rem; display: flex; align-items: center; gap: 0.6rem;
+  }
+  .cart-panel h3 .count {
+    background: var(--orange); color: #fff;
+    font-size: 0.75rem; width: 22px; height: 22px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  }
+  .cart-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.9rem;
+  }
+  .cart-item:last-of-type { border-bottom: none; }
+  .cart-item .item-name { color: var(--text); }
+  .cart-item .item-qty { color: var(--muted); font-size: 0.8rem; }
+  .cart-item .item-price { color: var(--cyan); font-weight: 600; }
+  .cart-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 1rem 0; }
+  .cart-row { display: flex; justify-content: space-between; font-size: 0.9rem; padding: 0.3rem 0; }
+  .cart-row.total { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--text); }
+  .cart-row .label { color: var(--muted); }
+  .checkout-btn {
+    width: 100%; margin-top: 1.4rem;
+    background: var(--orange); color: #fff; border: none;
+    padding: 0.9rem; border-radius: 10px; font-size: 0.95rem;
+    cursor: pointer; font-family: 'Syne', sans-serif; font-weight: 700;
+    transition: opacity 0.2s, transform 0.2s;
+    box-shadow: 0 4px 20px rgba(255,90,31,0.35);
+  }
+  .checkout-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  .cart-empty { color: var(--muted); text-align: center; font-size: 0.9rem; padding: 2rem 0; }
+
+  /* FOOTER */
+  footer {
+    background: #020810; text-align: center;
+    padding: 2.5rem; color: var(--muted); font-size: 0.85rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  footer span { color: var(--cyan); }
+
+  /* SCROLL ANIM */
+  .fade-in {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo"><span>AJ</span> Anthony Jesus</div>
+  <ul>
+    <li><a href="#tecnologias">Tecnologías</a></li>
+    <li><a href="#tienda">Tienda</a></li>
+  </ul>
+  <button class="cta-nav">Contáctame</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <p class="hero-tag"><span>Anthony Jesus</span> esto es todo lo que aprendí</p>
+  <p class="hero-sub">
+    Intento de programador — relajado pero eficaz.<br>
+    No funciono bajo presión… pero si me das tiempo, puedo aprender cualquier cosa.
+  </p>
+  <h1>Mi portafolio<br>de tecnologías</h1>
+  <p class="hero-techs">HTML · CSS · PHP · Java</p>
+  <button class="btn-orange" onclick="document.getElementById('tecnologias').scrollIntoView({behavior:'smooth'})">Quieres saber más</button>
+</section>
+
+<!-- TECH SECTION -->
+<section id="tecnologias">
+  <p class="section-label fade-in">Proyecto de Anthony Jesus</p>
+  <p class="section-sub fade-in">Esto es todo lo que aprendí</p>
+  <div class="cards-grid">
+    <div class="tech-card fade-in">
+      <div class="card-img html">🌐</div>
+      <div class="card-body">
+        <h3>HTML</h3>
+        <p>Aprendí la estructura base de toda página web: etiquetas semánticas, formularios, tablas y la correcta organización del contenido.</p>
+        <div class="tags"><span class="tag">HTML5</span><span class="tag">Semántica</span><span class="tag">Forms</span></div>
+      </div>
+    </div>
+    <div class="tech-card fade-in">
+      <div class="card-img css">🎨</div>
+      <div class="card-body">
+        <h3>CSS</h3>
+        <p>Dominé estilos visuales, Flexbox, Grid, animaciones y diseño responsive para crear interfaces atractivas en cualquier dispositivo.</p>
+        <div class="tags"><span class="tag">Flexbox</span><span class="tag">Grid</span><span class="tag">Animaciones</span></div>
+      </div>
+    </div>
+    <div class="tech-card fade-in">
+      <div class="card-img php">🐘</div>
+      <div class="card-body">
+        <h3>PHP</h3>
+        <p>Aprendí programación del lado del servidor: conexión a bases de datos, manejo de sesiones y construcción de APIs dinámicas.</p>
+        <div class="tags"><span class="tag">PHP 8</span><span class="tag">MySQL</span><span class="tag">APIs</span></div>
+      </div>
+    </div>
+    <div class="tech-card fade-in">
+      <div class="card-img java">☕</div>
+      <div class="card-body">
+        <h3>Java</h3>
+        <p>Desarrollé lógica orientada a objetos, estructuras de datos y aplicaciones robustas con uno de los lenguajes más usados en la industria.</p>
+        <div class="tags"><span class="tag">POO</span><span class="tag">Spring</span><span class="tag">Collections</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP SECTION -->
+<section id="tienda">
+  <div class="shop-intro fade-in">
+    <div class="badge">🛒 Campus Shop</div>
+    <p class="section-label" style="color:#fff">Tienda del Campus</p>
+    <p class="section-sub">Bienvenida, <strong style="color:#fff">Ana Torres</strong> — elige tus productos favoritos</p>
+  </div>
+
+  <div class="shop-layout">
+    <!-- Products -->
+    <div>
+      <div class="products-grid">
+        <div class="product-card fade-in">
+          <span class="offer-badge">🔥 Oferta</span>
+          <div class="product-icon">⌨️</div>
+          <h4>Teclado Mecánico</h4>
+          <p class="price offer">S/ 99.90</p>
+          <button class="add-btn" onclick="addToCart('Teclado Mecánico', 99.90)">+ Agregar al carrito</button>
+        </div>
+        <div class="product-card fade-in">
+          <div class="product-icon">🖱️</div>
+          <h4>Mouse Inalámbrico</h4>
+          <p class="price">S/ 49.90</p>
+          <button class="add-btn" onclick="addToCart('Mouse Inalámbrico', 49.90)">+ Agregar al carrito</button>
+        </div>
+        <div class="product-card fade-in">
+          <div class="product-icon">💡</div>
+          <h4>Lámpara LED</h4>
+          <p class="price">S/ 24.50</p>
+          <button class="add-btn" onclick="addToCart('Lámpara LED', 24.50)">+ Agregar al carrito</button>
+        </div>
+        <div class="product-card fade-in">
+          <div class="product-icon">🎧</div>
+          <h4>Auriculares USB</h4>
+          <p class="price">S/ 79.90</p>
+          <button class="add-btn" onclick="addToCart('Auriculares USB', 79.90)">+ Agregar al carrito</button>
+        </div>
+        <div class="product-card fade-in">
+          <div class="product-icon">📱</div>
+          <h4>Soporte Móvil</h4>
+          <p class="price">S/ 15.00</p>
+          <button class="add-btn" onclick="addToCart('Soporte Móvil', 15.00)">+ Agregar al carrito</button>
+        </div>
+        <div class="product-card fade-in">
+          <div class="product-icon">🔌</div>
+          <h4>Hub USB-C</h4>
+          <p class="price">S/ 59.90</p>
+          <button class="add-btn" onclick="addToCart('Hub USB-C', 59.90)">+ Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart -->
+    <div>
+      <div class="cart-panel">
+        <h3>🛒 Carrito <span class="count" id="cartCount">0</span></h3>
+        <div id="cartItems"><p class="cart-empty">Tu carrito está vacío</p></div>
+        <div class="cart-divider"></div>
+        <div class="cart-row"><span class="label">Subtotal</span><span id="subtotal">S/ 0.00</span></div>
+        <div class="cart-row"><span class="label">IGV (18%)</span><span id="igv">S/ 0.00</span></div>
+        <div class="cart-divider"></div>
+        <div class="cart-row total"><span>Total</span><span id="total">S/ 0.00</span></div>
+        <button class="checkout-btn">Proceder al pago →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Hecho con ❤️ por <span>Anthony Jesus</span> · 2025
+</footer>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Cart logic
+  let cart = {};
+
+  function addToCart(name, price) {
+    if (cart[name]) {
+      cart[name].qty++;
+    } else {
+      cart[name] = { price, qty: 1 };
+    }
+    renderCart();
+  }
+
+  function renderCart() {
+    const items = Object.entries(cart);
+    const container = document.getElementById('cartItems');
+    const countEl = document.getElementById('cartCount');
+
+    if (items.length === 0) {
+      container.innerHTML = '<p class="cart-empty">Tu carrito está vacío</p>';
+      countEl.textContent = '0';
+      updateTotals(0);
+      return;
+    }
+
+    let total = 0;
+    let html = '';
+    items.forEach(([name, { price, qty }]) => {
+      const subtotal = price * qty;
+      total += subtotal;
+      html += `
+        <div class="cart-item">
+          <div>
+            <div class="item-name">${name}</div>
+            <div class="item-qty">x${qty}</div>
+          </div>
+          <div class="item-price">S/ ${subtotal.toFixed(2)}</div>
+        </div>`;
+    });
+    container.innerHTML = html;
+    countEl.textContent = items.reduce((a, [, v]) => a + v.qty, 0);
+    updateTotals(total);
+  }
+
+  function updateTotals(subtotal) {
+    const igv = subtotal * 0.18;
+    document.getElementById('subtotal').textContent = `S/ ${subtotal.toFixed(2)}`;
+    document.getElementById('igv').textContent = `S/ ${igv.toFixed(2)}`;
+    document.getElementById('total').textContent = `S/ ${(subtotal + igv).toFixed(2)}`;
+  }
+</script>
+</body>
+</html>
